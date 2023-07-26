@@ -11,14 +11,14 @@ import "react-toastify/dist/ReactToastify.css";
 function App() {
   const [prompt, setprompt] = useState("");
   const [number, setNumber] = useState(1);
-  const [size, setSize] = useState("");
+  // const [size, setSize] = useState("");
   const [link, setLink] = useState(null);
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     const data = await getImageUrl(prompt, number);
     setLink(data.url);
 
-    toast(data.status);
+    toast(data.message);
   };
   // console.log(link);
   return (
@@ -57,7 +57,7 @@ function App() {
         {link &&
           link.map((item, i) => (
             <Col xs={6} md={4} key={i}>
-              <a href={item.url} target="_blank">
+              <a href={item.url} target="_blank" rel="noreferrer">
                 <Image src={item.url} thumbnail />
               </a>
             </Col>

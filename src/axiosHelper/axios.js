@@ -1,8 +1,9 @@
-import React from "react";
 import axios from "axios";
 
 export const getImageUrl = async (prompt, number) => {
-  const api = "http://localhost:8000/";
+  console.log(prompt, number);
+  const api = "http://localhost:8000/generations";
+  const url = "https://dalle-z6rw.onrender.com/generations";
 
   const options = {
     method: "POST",
@@ -20,6 +21,7 @@ export const getImageUrl = async (prompt, number) => {
     const { data } = await axios.post(api, body, options);
     return data;
   } catch (error) {
+    console.log(error);
     return {
       status: "error",
       message: error.message,
