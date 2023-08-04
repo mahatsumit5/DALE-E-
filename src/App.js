@@ -11,43 +11,49 @@ import "react-toastify/dist/ReactToastify.css";
 function App() {
   const [prompt, setprompt] = useState("");
   const [number, setNumber] = useState(1);
-  // const [size, setSize] = useState("");
   const [link, setLink] = useState(null);
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-    const data = await getImageUrl(prompt, number);
+    const respPending = getImageUrl(prompt, number);
+    toast.promise(respPending, { loading: "Please wait" });
+    const data = await respPending;
     setLink(data.url);
 
     toast(data.message);
   };
   // console.log(link);
   return (
-    <Container>
-      <Row>
-        <Form onSubmit={handleOnSubmit}>
+    <Container className="d-flex justify-content-center mx-auto align-items-center">
+      <h1>Your wish is our command.</h1>
+      <Form onSubmit={handleOnSubmit} className="form d-flex w-100 gap-5">
+        <div className="w-100">
           <Form.Control
-            placeholder="enter the image you want to generate"
-            aria-label="Recipient's username"
-            aria-describedby="basic-addon2"
+            type="text"
+            placeholder="Enter the image you want to generate"
             onChange={(e) => {
               setprompt(e.target.value);
             }}
           />
-          <Form.Label>Number of Images:{number}</Form.Label>
-          <Form.Range
+        </div>
+
+        <div className="w-100">
+          <Form.Control
+            type="number"
             min={1}
             max={10}
             defaultValue={1}
             onChange={(e) => setNumber(parseInt(e.target.value))}
           />
+        </div>
 
-          <Button variant="primary" id="button-addon2" type="submit">
+        <div className="d-flex">
+          <Button variant="dark" id="button-addon2" type="submit">
             submit
           </Button>
-        </Form>
-      </Row>
+        </div>
+      </Form>
 
-      <Row>
+      <Row className="mt-5">
         {!link && (
           <Spinner animation="border" role="status">
             <span className="visually-hidden">Loading...</span>

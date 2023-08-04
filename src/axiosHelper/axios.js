@@ -1,9 +1,10 @@
 import axios from "axios";
 
 export const getImageUrl = async (prompt, number) => {
-  console.log(prompt, number);
-  const api = "http://localhost:8000/generations";
-  const url = "https://dalle-z6rw.onrender.com/generations";
+  const api =
+    process.env.NODE_ENV !== "production"
+      ? "http://localhost:8000/generations"
+      : "/generations";
 
   const options = {
     method: "POST",
